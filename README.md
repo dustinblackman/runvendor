@@ -23,8 +23,8 @@ Then you can add the following to either a Makefile or `go generate` to run `gin
   runvendor github.com/onsi/ginkgo/ginkgo -v -r .
 ```
 
-If you commit your vendor folder, I'd recommend adding the bincache to your `.gitignore`.
+If you commit your vendor folder, I'd recommend adding the .bin to your `.gitignore`.
 
 ```
-  echo "vendor/bincache/" >> .gitignore
+  echo "vendor/.bin/" >> .gitignore
 ```
