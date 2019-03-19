@@ -1,0 +1,45 @@
+#!/bin/sh
+
+set -e
+
+currentdir=$(pwd)
+pkg_path="$1"
+pkg_name=$(basename "$1")
+
+shift
+
+runBin() {
+  bin_path="$1"; shift;
+
+  full_path=$(realpath "$bin_path")
+  cd "$currentdir"
+  "$full_path" "$@"
+  exit 0
+}
+
+# Find vendor folder
+while [ $PWD != "/" ]; do
+  if (test -e vendor); then
+    break
+  else
+    cd ..
+  fi
+done
+
+# Verify the previous loop found it or if we ended at root.
+if ! (test -e vendor); then
+  echo "Could not find vendor folder"
+  exit 1
+fi
+
+# Check if bin already exists in cache, run it if so.
+mkdir -p vendor/bincache
+bin_path=$(realpath "vendor/bincache/$pkg_name")
+if (test -e "$bin_path"); then
+  runBin "$bin_path" "$@"
+fi
+
+# Build it
+cd "vendor/$pkg_path"
+go build -o "$bin_path" *.go
+runBin "$bin_path" "$@"
