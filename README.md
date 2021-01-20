@@ -1,5 +1,7 @@
 # runvendor
 
+DEPRECATED: See [gomodrun](https://github.com/dustinblackman/gomodrun) instead.
+
 Slightly lazy shell script to build, cache, and execute binaries stored in your Golang projects vendor folder.
 
 # Install
